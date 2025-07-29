@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Smart Planner</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f8f8f8;
+            color: #333;
+            padding: 20px;
+            margin: 0;
+            animation: fadeIn 1s ease-in;
+        }
+        h1 {
+            text-align: center;
+            font-weight: 700;
+            font-size: 36px;
+        }
+        form {
+            max-width: 600px;
+            margin: 30px auto;
+            background: #fff;
+            border-radius: 20px;
+            padding: 20px;
+            box-shadow: 0 0 15px rgba(0,0,0,0.1);
+            animation: slideIn 0.8s ease-out;
+        }
+        .task-row {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+        input[type="text"], input[type="number"] {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+        }
+        button {
+            background: #ff9a76;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+        button:hover {
+            background: #ff7f50;
+        }
+        .schedule {
+            max-width: 600px;
+            margin: 20px auto;
+            background: #fff;
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.05);
+            animation: fadeInUp 1s ease-in;
+        }
+        .schedule-item {
+            margin-bottom: 10px;
+            padding: 10px;
+            border-left: 5px solid #ff7f50;
+            background: #fafafa;
+            border-radius: 8px;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        @keyframes slideIn {
+            from { transform: translateY(-20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        @keyframes fadeInUp {
+            from { transform: translateY(20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+    <h1>⏰ Smart Daily Planner</h1>
+    <form method="POST">
+        <div id="tasks">
+            <div class="task-row">
+                <input type="text" name="task" placeholder="Task name">
+                <input type="number" step="0.1" name="duration" placeholder="Duration (hours)">
+            </div>
+        </div>
+        <button type="button" onclick="addTask()">+ Add Task</button>
+        <button type="submit">📅 Generate Schedule</button>
+    </form>
+
+    {% if schedule %}
+    <div class="schedule">
+        <h2>🗓️ Your Smart Schedule</h2>
+        {% for item in schedule %}
+        <div class="schedule-item">
+            <strong>{{ item.name }}</strong>: {{ item.start }} - {{ item.end }}
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    <script>
+        function addTask() {
+            const tasksDiv = document.getElementById('tasks');
+            const row = document.createElement('div');
+            row.className = 'task-row';
+            row.innerHTML = `
+                <input type="text" name="task" placeholder="Task name">
+                <input type="number" step="0.1" name="duration" placeholder="Duration (hours)">
+            `;
+            tasksDiv.appendChild(row);
+        }
+    </script>
+</body>
+</html>
